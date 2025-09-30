@@ -1,17 +1,16 @@
-import type { Task } from "../hooks/useTasks"; 
+import type { Task } from "../hooks/useTasks";
 import TaskItem from "./TaskItem";
 
 type Props = {
   title: string;
   tasks: Task[];
-  onStart: (id: number) => void;
-  onCancel: (id: number) => void;
-  onComplete: (id: number) => void;
-  onUpdateDuration: (id: number, minutes: number) => void;
-  onDelete: (id: number) => void;   
+  onStart: (id: string) => void;
+  onCancel: (id: string) => void;
+  onComplete: (id: string) => void;
+  onUpdateDuration: (id: string, minutes: number) => void;
+  onDelete: (id: string) => void;
 };
 
-//Title and list of TaskItem is shown here
 function TaskList({ title, tasks, onStart, onCancel, onComplete, onUpdateDuration, onDelete }: Props) {
   return (
     <div className="mb-6">
@@ -20,13 +19,13 @@ function TaskList({ title, tasks, onStart, onCancel, onComplete, onUpdateDuratio
         {tasks.length > 0 ? (
           tasks.map((task) => (
             <TaskItem
-              key={task.id}
+              key={task._id}
               task={task}
               onStart={onStart}
               onCancel={onCancel}
               onComplete={onComplete}
               onUpdateDuration={onUpdateDuration}
-              onDelete={onDelete}   
+              onDelete={onDelete}
             />
           ))
         ) : (
@@ -36,6 +35,5 @@ function TaskList({ title, tasks, onStart, onCancel, onComplete, onUpdateDuratio
     </div>
   );
 }
-
 
 export default TaskList;

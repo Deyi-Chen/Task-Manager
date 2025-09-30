@@ -1,13 +1,12 @@
-import type { Task } from "../hooks/useTasks"; 
+import type { Task } from "../hooks/useTasks";
 
-//same stuff
 type Props = {
   task: Task;
-  onStart: (id: number) => void;
-  onCancel: (id: number) => void;
-  onComplete: (id: number) => void;
-  onUpdateDuration: (id: number, minutes: number) => void;
-  onDelete: (id: number) => void;   
+  onStart: (id: string) => void;
+  onCancel: (id: string) => void;
+  onComplete: (id: string) => void;
+  onUpdateDuration: (id: string, minutes: number) => void;
+  onDelete: (id: string) => void;
 };
 
 function TaskItem({ task, onStart, onCancel, onComplete, onUpdateDuration, onDelete }: Props) {
@@ -24,7 +23,7 @@ function TaskItem({ task, onStart, onCancel, onComplete, onUpdateDuration, onDel
             type="number"
             min={1}
             value={task.duration}
-            onChange={(e) => onUpdateDuration(task.id, Number(e.target.value))}
+            onChange={(e) => onUpdateDuration(task._id, Number(e.target.value))}
             className="w-16 border rounded px-1 text-sm text-gray-700"
           />
         )}
@@ -37,7 +36,7 @@ function TaskItem({ task, onStart, onCancel, onComplete, onUpdateDuration, onDel
       <div className="flex gap-2">
         {!task.completed && !task.running && (
           <button
-            onClick={() => onStart(task.id)}
+            onClick={() => onStart(task._id)}
             className="px-3 py-1 rounded bg-blue-600 text-white"
           >
             Start
@@ -45,7 +44,7 @@ function TaskItem({ task, onStart, onCancel, onComplete, onUpdateDuration, onDel
         )}
         {task.running && (
           <button
-            onClick={() => onCancel(task.id)}
+            onClick={() => onCancel(task._id)}
             className="px-3 py-1 rounded bg-red-500 text-white"
           >
             Cancel
@@ -53,7 +52,7 @@ function TaskItem({ task, onStart, onCancel, onComplete, onUpdateDuration, onDel
         )}
         {!task.completed && (
           <button
-            onClick={() => onComplete(task.id)}
+            onClick={() => onComplete(task._id)}
             className="px-3 py-1 rounded bg-green-500 text-white"
           >
             Complete
@@ -61,11 +60,9 @@ function TaskItem({ task, onStart, onCancel, onComplete, onUpdateDuration, onDel
         )}
         {task.completed && (
           <>
-            <span className="px-3 py-1 rounded bg-gray-300 text-gray-600">
-              Done
-            </span>
+            <span className="px-3 py-1 rounded bg-gray-300 text-gray-600">Done</span>
             <button
-              onClick={() => onDelete(task.id)}
+              onClick={() => onDelete(task._id)}
               className="px-3 py-1 rounded bg-red-500 text-white hover:bg-red-600"
             >
               Delete
@@ -76,6 +73,5 @@ function TaskItem({ task, onStart, onCancel, onComplete, onUpdateDuration, onDel
     </div>
   );
 }
-
 
 export default TaskItem;
